@@ -1,0 +1,70 @@
+/* creacion de inputs */
+.borde{
+    border: 1px solid black;
+    width: 32%;
+    height: 370px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.inputs{
+    margin-bottom: 7px;
+}
+
+/* Guardado de datos */
+
+
+
+.nombreTaller{
+    background-color: white;
+    margin-left: -1px;
+    margin-top: 115px;
+    border-radius: 0px 5px 5px 5px; 
+    width: 102%;
+    height: 53px;
+    padding-top: 6px;
+    padding-left: 5px; 
+}
+
+.estilosPost{
+    border: 1px solid black;
+    width: 32%;
+    height: 370px;
+    margin: 5px;
+    border: 1px solid rgb(126, 126, 126);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.estilosPost:hover{
+    color: rgb(49, 49, 49);
+    box-shadow: 0 0 10px rgb(100, 100, 100);
+}
+/* estilos inicales */
+
+#btn{
+    border: 1px solid rgb(126, 126, 126);
+    width: 32%;
+    height: 170px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 2em;
+    text-align: center;
+    padding-top: 10px;
+    color: rgba(105, 105, 105, 0.911);
+    transition: all .3s;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+#btn:hover{
+    color: rgb(49, 49, 49);
+    box-shadow: 0 0 10px rgb(100, 100, 100);
+}
+
+.taller{
+    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
