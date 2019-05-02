@@ -49,9 +49,21 @@ export default class Tarjeta {
         inpt1.type = 'date';
         inpt1.className = 'form-control inputs';
         inpt1.id = 'fechaInicio';
+        inpt1.required = true;
+        // Validaciones 2
+        let divVal12 = document.createElement('div');
+        divVal12.textContent = "Correcto";
+        divVal12.className = 'valid-feedback';
+        let divVal22 = document.createElement('div');
+        divVal22.textContent = 'Incorrecto';
+        divVal22.className = 'invalid-feedback';
         formGroup2.appendChild(label1);
         formGroup2.appendChild(inpt1);
+        formGroup2.appendChild(divVal12);
+        formGroup2.appendChild(divVal22);
+        
 
+// -------------------------------------------------------------------------------
         // Tercer FormGroup
         let formGroup3 = document.createElement('div');
         formGroup3.className = 'form-group';
@@ -62,9 +74,21 @@ export default class Tarjeta {
         inpt2.type = 'date';
         inpt2.className = 'form-control inputs';
         inpt2.id = 'fechaFin';
+        inpt2.required = true;
+        // Validaciones 3
+        let divVal13 = document.createElement('div');
+        divVal13.textContent = "Correcto";
+        divVal13.className = 'valid-feedback';
+        let divVal23 = document.createElement('div');
+        divVal23.textContent = 'Incorrecto';
+        divVal23.className = 'invalid-feedback';
         formGroup3.appendChild(label2);
         formGroup3.appendChild(inpt2);
+        formGroup3.appendChild(divVal13);
+        formGroup3.appendChild(divVal23);
         
+        
+// -------------------------------------------------------------------------------
         // Cuarto FormGroup
         let formGroup4 = document.createElement('div');
         formGroup4.className = 'form-group';
@@ -74,10 +98,21 @@ export default class Tarjeta {
         let inpt3 = document.createElement('input');
         inpt3.type = 'number';
         inpt3.className = 'form-control inputs';
-        inpt3.id = 'horas';
+        inpt3.id = 'horas';   
+        inpt3.required = true; 
+        // Validaciones 3
+        let divVal14 = document.createElement('div');
+        divVal14.textContent = "Correcto";
+        divVal14.className = 'valid-feedback';
+        let divVal24 = document.createElement('div');
+        divVal24.textContent = 'Incorrecto';
+        divVal24.className = 'invalid-feedback';
         formGroup4.appendChild(label3);
         formGroup4.appendChild(inpt3);
+        formGroup4.appendChild(divVal14);
+        formGroup4.appendChild(divVal24);
 
+// -------------------------------------------------------------------------------
         // Quinto FormGroup
         let formGroup5 = document.createElement('div');
         formGroup5.className = 'form-group';
@@ -88,8 +123,17 @@ export default class Tarjeta {
         inpt4.type = 'number';
         inpt4.className = 'form-control inputs';
         inpt4.id = 'cupo';
+        // Validaciones 5
+        let divVal15 = document.createElement('div');
+        divVal15.textContent = "Correcto";
+        divVal15.className = 'valid-feedback';
+        let divVal25 = document.createElement('div');
+        divVal25.textContent = 'Incorrecto';
+        divVal25.className = 'invalid-feedback';
         formGroup5.appendChild(label4);
         formGroup5.appendChild(inpt4);
+        formGroup5.appendChild(divVal15);
+        formGroup5.appendChild(divVal25);
 
         // creacion de botones
         let btnSave = document.createElement('button');
@@ -112,7 +156,7 @@ export default class Tarjeta {
                     confirmButtonText: 'OK'
                   })
             };
-            
+            form.classList.add('was-validated');
         });
 
         let btnCancel = document.createElement('button');
