@@ -28,7 +28,7 @@
 
 .estilosPost{
     border: 1px solid black;
-    width: 32%;
+    width: 281px;
     height: 370px;
     margin: 5px;
     border: 1px solid rgb(126, 126, 126);
@@ -44,7 +44,7 @@
 
 #btn{
     border: 1px solid rgb(126, 126, 126);
-    width: 32%;
+    width: 281px;
     height: 170px;
     margin: 5px;
     cursor: pointer;
@@ -67,4 +67,34 @@
     border: 1px solid black;
     display: flex;
     flex-wrap: wrap;
+}
+
+/* div black */
+
+.divBlack{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.651);
+}
+
+.formCreate{
+    width: 390px;
+    height: 520px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background:white;
+    opacity: 1;
+    padding: 20px;
+}
+
+.mini-menu{
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    color: black;
 }
