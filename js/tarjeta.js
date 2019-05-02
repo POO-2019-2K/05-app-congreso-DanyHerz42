@@ -1,3 +1,4 @@
+import Taller from "./taller.js"
 export default class Tarjeta {
     constructor(actual,body,taller) {
         this._actual = actual;
@@ -9,7 +10,7 @@ export default class Tarjeta {
 
     crearFormularioRegistroDeTaller() {
         let form = document.createElement('form');
-        form.className = 'formCreate needs-validation';
+        form.className = 'needs-validation formCreate';
         form.noValidate = true;
 
         // Primer FormGroup
@@ -23,9 +24,21 @@ export default class Tarjeta {
         inpt0.className = 'form-control inputs';
         inpt0.placeholder = 'Escriba aquí';
         inpt0.id = 'name';
+        inpt0.required = true;
+        // Validaciones 1
+        let divVal1 = document.createElement('div');
+        divVal1.textContent = "Correcto";
+        divVal1.className = 'valid-feedback';
+        let divVal2 = document.createElement('div');
+        divVal2.textContent = 'Incorrecto';
+        divVal2.className = 'invalid-feedback';
         formGroup1.appendChild(label0);
         formGroup1.appendChild(inpt0);
+        formGroup1.appendChild(divVal1);
+        formGroup1.appendChild(divVal2);
 
+
+// -------------------------------------------------------------------------------
         // Segundo FormGroup
         let formGroup2 = document.createElement('div');
         formGroup2.className = 'form-group';
@@ -85,9 +98,21 @@ export default class Tarjeta {
         btnSave.textContent = 'Guardar';
         btnSave.style.marginLeft ='10px';
         btnSave.addEventListener('click', () => {
-            let name = inpt0.value;
-            this.createTarget(this._actual,name);
-            this._body.removeChild(divBlack);
+
+            if (form.checkValidity() === true) {
+                let name = inpt0.value;
+                this.createTarget(this._actual,name);
+                this._body.removeChild(divBlack);
+                console.log(form);
+
+                Swal.fire({
+                    title: 'Listo!',
+                    text: 'Taller Agregado con éxito!',
+                    type: 'success',
+                    confirmButtonText: 'OK'
+                  })
+            };
+            
         });
 
         let btnCancel = document.createElement('button');
