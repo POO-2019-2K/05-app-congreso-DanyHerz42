@@ -17,56 +17,59 @@
 
 .nombreTaller{
     background-color: white;
-    margin-left: -1px;
-    margin-top: 115px;
-    border-radius: 0px 5px 5px 5px; 
-    width: 102%;
-    height: 53px;
+    margin-left: -3px;
+    margin-top: 170px;
+    width: 101%;
+    height: 103px;
     padding-top: 6px;
-    padding-left: 5px; 
+    padding-left: 10px; 
+    box-shadow: -1px -18px 19px -8px rgba(0,0,0,0.14);
 }
 
 .estilosPost{
-    border: 1px solid black;
-    width: 281px;
-    height: 370px;
-    margin: 5px;
-    border: 1px solid rgb(126, 126, 126);
-    border-radius: 5px;
+    width: 424px;
+    margin: 10px;
     overflow: hidden;
+    border: 1px solid rgb(197, 196, 196);
+    border-radius: 10px;
 }
 
 .estilosPost:hover{
     color: rgb(49, 49, 49);
-    box-shadow: 0 0 10px rgb(100, 100, 100);
+    box-shadow: 0 0 10px rgba(100, 100, 100, 0.76);
 }
 /* estilos inicales */
 
 #btn{
-    border: 1px solid rgb(126, 126, 126);
-    width: 281px;
-    height: 170px;
-    margin: 5px;
+    width: 424px;
+    height: 270px;
+    margin: 10px;
     cursor: pointer;
     font-size: 2em;
     text-align: center;
-    padding-top: 10px;
-    color: rgba(105, 105, 105, 0.911);
-    transition: all .3s;
+    padding-top: 80px;
+    color: rgb(255, 255, 255);
+    transition: all .32s;
     font-weight: bold;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.075);
+    background-color: #2C5364;
+    border-radius: 10px;
 }
 
 #btn:hover{
-    color: rgb(49, 49, 49);
-    box-shadow: 0 0 10px rgb(100, 100, 100);
+    box-shadow: 0 0 10px rgba(44, 44, 44, 0.87),
+                -1px -1px 0px 10px inset #0F2027;
+}
+
+#btn:hover > .pull{
+    transition: all .7s;
+    transition-timing-function: ease-in-out;
+    transform: rotateZ(360deg) rotateX(360deg);
 }
 
 .taller{
-    border: 1px solid black;
     display: flex;
     flex-wrap: wrap;
+   
 }
 
 /* div black */
@@ -78,6 +81,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.651);
+    z-index: 3;
 }
 
 .formCreate{
@@ -86,7 +90,6 @@
     position: none;
     margin-top: 10px;
     margin-left: 500px;
-    
     background:white;
     opacity: 1;
     padding: 20px;
@@ -94,7 +97,83 @@
 
 .mini-menu{
     position: absolute;
-    top: 5%;
-    right: 5%;
+    margin-top: 2px;
+    
     color: black;
+}
+
+.aside{
+    position: fixed;
+    border: 1px solid black;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #0F2027;
+    z-index: 2;
+}
+
+.encabezado{
+    margin-top: 8px;
+    text-align: center;
+    color: #fff;
+}
+
+.nav{
+    border: 1px solid rgb(214, 213, 213);
+    box-shadow: 0 3px 10px rgb(223, 223, 223);
+    position: fixed;
+    top: 0;
+    left: 300px;
+    width: 100%;
+    padding: 10px;
+    padding-top: 20px;
+    background-color: rgb(243, 243, 243);
+    border-left: none;
+    border-right: none;
+    padding-left: 20px;
+    z-index: 1;
+}
+
+.edit{
+    margin-left: 370px;
+    margin-top: 5px;
+    color: black;
+    transition: all .2s;
+    position: absolute;
+}
+
+.add{
+    margin-left: 315px;
+    margin-top: 5px;
+    color: black;
+    transition: all .2s;
+    position: absolute;
+}
+
+.edit:hover,.add:hover{
+    color: rgb(0, 128, 233);
+    text-shadow: 0 0 5px rgba(0, 128, 233, 0.397);
+    cursor: pointer;
+}
+
+.footer{
+    border: 1px solid black;
+    color: white;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 480px;
+    padding: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.icon-f{
+    font-size: 21px;
+}
+
+.icon-f:hover{
+    color: rgb(255, 154, 4);
+    cursor: pointer;
+    text-shadow: 0 0 5px rgba(255, 175, 1, 0.514);
 }

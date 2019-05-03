@@ -184,7 +184,7 @@ export default class Tarjeta {
     }
 
     colorRandom() {
-        let m = "rgba(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + ","+ Math.random() + parseInt(.50) +")";
+        let m = "rgba(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + ")";
         return m;
     }
 
@@ -193,12 +193,12 @@ export default class Tarjeta {
         menu.className = 'fas fa-ellipsis-v';
         menu.style.position = 'absolute';
         menu.style.marginTop = '10px';
-        menu.style.marginLeft ='250px';
+        menu.style.marginLeft ='390px';
         menu.style.fontSize = '2em';
         menu.style.color = 'black';
         let div = document.createElement('div');
-        div.style.height = '170px';
-        div.style.transition = 'all .5s';
+        div.style.height = '270px';
+        div.style.transition = 'all .2s';
         div.className = 'estilosPost';
         div.style.background = this.colorRandom();
 
@@ -209,7 +209,19 @@ export default class Tarjeta {
         let div2 = document.createElement('div');
         div2.className = 'nombreTaller';
 
+
+        let btnEdit = document.createElement('i');
+        btnEdit.className = 'far fa-edit edit';
+        btnEdit.style.fontSize = '25px';
+
+        let btnAddStudent = document.createElement('i');
+        btnAddStudent.className = 'fas fa-user-plus add';
+        btnAddStudent.style.fontSize = '25px';
+
+
         div2.appendChild(h2);
+        div2.appendChild(btnAddStudent);
+        div2.appendChild(btnEdit);
         div.appendChild(menu);
         div.appendChild(div2);
         
