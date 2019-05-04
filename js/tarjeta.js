@@ -12,12 +12,23 @@ export default class Tarjeta {
         let form = document.createElement('form');
         form.className = 'needs-validation formCreate';
         form.noValidate = true;
+        let columnLeft = document.createElement('div');
+        columnLeft.className = 'columnLeft';
+        let columnRight = document.createElement('div');
+        columnRight.className = 'columnRight';
+
+        let closeWindow = document.createElement('i');
+        closeWindow.className = 'fas fa-times close';
+        closeWindow.addEventListener('click', () => {
+            this._body.removeChild(divBlack);
+        })
+
 
         // Primer FormGroup
         let formGroup1 = document.createElement('div');
         formGroup1.className = 'form-group';
         let label0 = document.createElement('label');
-        label0.textContent = 'Nombre del taller:'
+        label0.textContent = 'Name of the workshop:'
         label0.className = 'inputs';
         let inpt0 = document.createElement('input');
         inpt0.type = 'text';
@@ -30,7 +41,7 @@ export default class Tarjeta {
         divVal1.textContent = "Correcto";
         divVal1.className = 'valid-feedback';
         let divVal2 = document.createElement('div');
-        divVal2.textContent = 'Incorrecto';
+        divVal2.textContent = 'Please complete the field';
         divVal2.className = 'invalid-feedback';
         formGroup1.appendChild(label0);
         formGroup1.appendChild(inpt0);
@@ -43,7 +54,7 @@ export default class Tarjeta {
         let formGroup2 = document.createElement('div');
         formGroup2.className = 'form-group';
         let label1 = document.createElement('label');
-        label1.textContent = 'Fecha de Inicio:'
+        label1.textContent = 'Start date: '
         label1.className = 'inputs';
         let inpt1 = document.createElement('input');
         inpt1.type = 'date';
@@ -55,7 +66,7 @@ export default class Tarjeta {
         divVal12.textContent = "Correcto";
         divVal12.className = 'valid-feedback';
         let divVal22 = document.createElement('div');
-        divVal22.textContent = 'Incorrecto';
+        divVal22.textContent = 'Please complete the field';
         divVal22.className = 'invalid-feedback';
         formGroup2.appendChild(label1);
         formGroup2.appendChild(inpt1);
@@ -68,7 +79,7 @@ export default class Tarjeta {
         let formGroup3 = document.createElement('div');
         formGroup3.className = 'form-group';
         let label2 = document.createElement('label');
-        label2.textContent = 'Fecha de fin:'
+        label2.textContent = 'End date: '
         label2.className = 'inputs';
         let inpt2 = document.createElement('input');
         inpt2.type = 'date';
@@ -80,7 +91,7 @@ export default class Tarjeta {
         divVal13.textContent = "Correcto";
         divVal13.className = 'valid-feedback';
         let divVal23 = document.createElement('div');
-        divVal23.textContent = 'Incorrecto';
+        divVal23.textContent = 'Please complete the field';
         divVal23.className = 'invalid-feedback';
         formGroup3.appendChild(label2);
         formGroup3.appendChild(inpt2);
@@ -93,7 +104,7 @@ export default class Tarjeta {
         let formGroup4 = document.createElement('div');
         formGroup4.className = 'form-group';
         let label3 = document.createElement('label');
-        label3.textContent = 'Numero de Horas:'
+        label3.textContent = 'Number of hours: '
         label3.className = 'inputs';
         let inpt3 = document.createElement('input');
         inpt3.type = 'number';
@@ -105,7 +116,7 @@ export default class Tarjeta {
         divVal14.textContent = "Correcto";
         divVal14.className = 'valid-feedback';
         let divVal24 = document.createElement('div');
-        divVal24.textContent = 'Incorrecto';
+        divVal24.textContent = 'Please complete the field';
         divVal24.className = 'invalid-feedback';
         formGroup4.appendChild(label3);
         formGroup4.appendChild(inpt3);
@@ -117,18 +128,19 @@ export default class Tarjeta {
         let formGroup5 = document.createElement('div');
         formGroup5.className = 'form-group';
         let label4 = document.createElement('label');
-        label4.textContent = 'Cupo:'
+        label4.textContent = 'Number of places:'
         label4.className = 'inputs';
         let inpt4 = document.createElement('input');
         inpt4.type = 'number';
         inpt4.className = 'form-control inputs';
         inpt4.id = 'cupo';
+        inpt4.required = true; 
         // Validaciones 5
         let divVal15 = document.createElement('div');
         divVal15.textContent = "Correcto";
         divVal15.className = 'valid-feedback';
         let divVal25 = document.createElement('div');
-        divVal25.textContent = 'Incorrecto';
+        divVal25.textContent = 'Please complete the field';
         divVal25.className = 'invalid-feedback';
         formGroup5.appendChild(label4);
         formGroup5.appendChild(inpt4);
@@ -139,8 +151,8 @@ export default class Tarjeta {
         let btnSave = document.createElement('button');
         btnSave.type = 'button';
         btnSave.className = 'btn btn-success'
-        btnSave.textContent = 'Guardar';
-        btnSave.style.marginLeft ='10px';
+        btnSave.textContent = 'Add workshop';
+        btnSave.style.marginLeft ='70px';
         btnSave.addEventListener('click', () => {
 
             if (form.checkValidity() === true) {
@@ -162,20 +174,29 @@ export default class Tarjeta {
         let btnCancel = document.createElement('button');
         btnCancel.type = 'button';
         btnCancel.className = 'btn btn-danger'
-        btnCancel.textContent = 'Cancelar';
-        btnCancel.style.marginLeft ='10px';
+        btnCancel.textContent = 'Cancel';
+        btnCancel.style.marginLeft ='30px';
         btnCancel.addEventListener('click', () => {
             this._body.removeChild(divBlack);
         });
 
-
-        form.appendChild(formGroup1);
-        form.appendChild(formGroup2);
-        form.appendChild(formGroup3);
-        form.appendChild(formGroup4);
-        form.appendChild(formGroup5);
-        form.appendChild(btnSave);
-        form.appendChild(btnCancel);
+        columnLeft.appendChild(formGroup1);
+        columnLeft.appendChild(formGroup2);
+        columnLeft.appendChild(formGroup3);
+        form.appendChild(closeWindow);
+        columnRight.appendChild(formGroup4);
+        columnRight.appendChild(formGroup5);
+        columnRight.appendChild(btnSave);
+        columnRight.appendChild(btnCancel);
+        form.appendChild(columnLeft);
+        form.appendChild(columnRight);
+        // form.appendChild(formGroup1);
+        // form.appendChild(formGroup2);
+        // form.appendChild(formGroup3);
+        // form.appendChild(formGroup4);
+        // form.appendChild(formGroup5);
+        // form.appendChild(btnSave);
+        // form.appendChild(btnCancel);
 
         let divBlack = document.createElement('div');
         divBlack.className = 'divBlack';
