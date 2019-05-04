@@ -1,14 +1,17 @@
 import Taller from "./taller.js"
 export default class Tarjeta {
-    constructor(actual,body,taller) {
+    constructor(actual, body, taller) {
         this._actual = actual;
         this._body = body;
         this._taller = taller;
+        this._id = 0;
+        this._idCard = 0;
         this.crearFormularioRegistroDeTaller();
         // console.log(this.colorRandom())
     }
 
     crearFormularioRegistroDeTaller() {
+
         let form = document.createElement('form');
         form.className = 'needs-validation formCreate';
         form.noValidate = true;
@@ -49,7 +52,7 @@ export default class Tarjeta {
         formGroup1.appendChild(divVal2);
 
 
-// -------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------
         // Segundo FormGroup
         let formGroup2 = document.createElement('div');
         formGroup2.className = 'form-group';
@@ -72,9 +75,9 @@ export default class Tarjeta {
         formGroup2.appendChild(inpt1);
         formGroup2.appendChild(divVal12);
         formGroup2.appendChild(divVal22);
-        
 
-// -------------------------------------------------------------------------------
+
+        // -------------------------------------------------------------------------------
         // Tercer FormGroup
         let formGroup3 = document.createElement('div');
         formGroup3.className = 'form-group';
@@ -97,9 +100,9 @@ export default class Tarjeta {
         formGroup3.appendChild(inpt2);
         formGroup3.appendChild(divVal13);
         formGroup3.appendChild(divVal23);
-        
-        
-// -------------------------------------------------------------------------------
+
+
+        // -------------------------------------------------------------------------------
         // Cuarto FormGroup
         let formGroup4 = document.createElement('div');
         formGroup4.className = 'form-group';
@@ -109,8 +112,8 @@ export default class Tarjeta {
         let inpt3 = document.createElement('input');
         inpt3.type = 'number';
         inpt3.className = 'form-control inputs';
-        inpt3.id = 'horas';   
-        inpt3.required = true; 
+        inpt3.id = 'horas';
+        inpt3.required = true;
         // Validaciones 3
         let divVal14 = document.createElement('div');
         divVal14.textContent = "Correcto";
@@ -123,7 +126,7 @@ export default class Tarjeta {
         formGroup4.appendChild(divVal14);
         formGroup4.appendChild(divVal24);
 
-// -------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------
         // Quinto FormGroup
         let formGroup5 = document.createElement('div');
         formGroup5.className = 'form-group';
@@ -134,7 +137,7 @@ export default class Tarjeta {
         inpt4.type = 'number';
         inpt4.className = 'form-control inputs';
         inpt4.id = 'cupo';
-        inpt4.required = true; 
+        inpt4.required = true;
         // Validaciones 5
         let divVal15 = document.createElement('div');
         divVal15.textContent = "Correcto";
@@ -152,14 +155,26 @@ export default class Tarjeta {
         btnSave.type = 'button';
         btnSave.className = 'btn btn-success'
         btnSave.textContent = 'Add workshop';
-        btnSave.style.marginLeft ='70px';
+        btnSave.style.marginLeft = '70px';
         btnSave.addEventListener('click', () => {
 
             if (form.checkValidity() === true) {
+
+                let color = this.colorRandom();
+                this._idCard = this.generateId();
                 let name = inpt0.value;
-                this.createTarget(this._actual,name);
+                let dateStar = inpt1.value;
+                let dateEnd = inpt2.value;
+                let hour = inpt3.value;
+                let places = inpt4.value;
+
+                let addTaller = new Taller(color,this._idCard,name,dateStar,dateEnd,hour,places)
+
+                this.createTarget(this._actual,color, name, this._idCard);
                 this._body.removeChild(divBlack);
                 console.log(form);
+
+
 
                 Swal.fire({
                     title: 'Listo!',
@@ -175,7 +190,7 @@ export default class Tarjeta {
         btnCancel.type = 'button';
         btnCancel.className = 'btn btn-danger'
         btnCancel.textContent = 'Cancel';
-        btnCancel.style.marginLeft ='30px';
+        btnCancel.style.marginLeft = '30px';
         btnCancel.addEventListener('click', () => {
             this._body.removeChild(divBlack);
         });
@@ -201,52 +216,135 @@ export default class Tarjeta {
         let divBlack = document.createElement('div');
         divBlack.className = 'divBlack';
         divBlack.appendChild(form);
-        this._body.appendChild(divBlack);     
+        this._body.appendChild(divBlack);
     }
 
     colorRandom() {
-        let m = "rgba(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + ")";
-        return m;
+        let random = Math.round(Math.random() * 10);
+        let color = 0;
+        switch (random) {
+            case 1:
+                color = '#F30B0B';
+                break;
+            case 2:
+                color = '#0105FE';
+                break;
+            case 3:
+                color = '#018E08';
+                break;
+            case 4:
+                color = '#FB6501';
+                break;
+            case 5:
+                color = '#F3E200';
+                break;
+            case 6:
+                color = '#FB01C9';
+                break;
+            case 7:
+                color = '#8D3030';
+                break;
+            case 8:
+                color = '#00CFFE';
+                break;
+            case 9:
+                color = '#000000';
+                break;
+            case 10:
+                color = '#761EE2';
+                break;
+            default:
+                break;
+        }
+
+        return color;
     }
 
-    createTarget(divActual,name) {
+    createTarget(divActual,color, name, id) {
+        
         let menuOptions = document.createElement('div');
-        menuOptions.className ='opcionesDeTarjeta';
+        menuOptions.className = 'opcionesDeTarjeta';
         let div = document.createElement('div');
         div.style.height = '270px';
         div.style.transition = 'all .2s';
         div.className = 'estilosPost';
         div.style.background = '#355C7D';
+        div.id = (id);
 
-        
+
         var h3 = document.createElement('h3');
         h3.textContent = name;
-        h3.className = 'encabezadoDeTarjeta'
+        h3.className = 'encabezadoDeTarjeta';
 
+        let hr = document.createElement('hr');
+        hr.className = 'hr';
+        hr.style.border = '2px solid'+ color +'';
 
+        let dialogEdit = document.createElement('p');
+        dialogEdit.className = 'dialogEdit rounded-pill';
+        dialogEdit.textContent = 'Edit this workshop';
+        dialogEdit.style.visibility = 'hidden';
         let btnEditTaller = document.createElement('i');
         btnEditTaller.className = 'far fa-edit edit';
         btnEditTaller.style.fontSize = '25px';
+        btnEditTaller.addEventListener('mouseover',() => {
+            dialogEdit.style.visibility = 'visible';
+            dialogDelete.style.visibility = 'hidden';
+            dialogAdd.style.visibility = 'hidden';
+            window.setTimeout( () => {dialogEdit.style.visibility = 'hidden'},2000);
+        });
+        
 
+        let dialogDelete = document.createElement('p');
+        dialogDelete.className = 'dialogDelete rounded-pill';
+        dialogDelete.textContent = 'Delete this workshop';
+        dialogDelete.style.visibility = 'hidden';
         let btnDeleteTaller = document.createElement('i');
         btnDeleteTaller.className = 'fas fa-trash-alt del';
         btnDeleteTaller.style.fontSize = '25px';
-
+        btnDeleteTaller.addEventListener('mouseover',() => {
+            dialogDelete.style.visibility = 'visible';
+            dialogEdit.style.visibility = 'hidden';
+            dialogAdd.style.visibility = 'hidden';
+            window.setTimeout( () => {dialogDelete.style.visibility = 'hidden'},2000);
+        });
+        
+        let dialogAdd = document.createElement('p');
+        dialogAdd.className = 'dialogAdd rounded-pill';
+        dialogAdd.textContent = 'Add participant';
+        dialogAdd.style.visibility = 'hidden';
         let btnAddStudent = document.createElement('i');
         btnAddStudent.className = 'fas fa-user-plus add';
         btnAddStudent.style.fontSize = '25px';
+        btnAddStudent.addEventListener('mouseover',() => {
+            dialogAdd.style.visibility = 'visible';
+            dialogDelete.style.visibility = 'hidden';
+            dialogEdit.style.visibility = 'hidden';
+            window.setTimeout( () => {dialogAdd.style.visibility = 'hidden'},2000);
+        });
 
         menuOptions.appendChild(btnEditTaller);
         menuOptions.appendChild(btnDeleteTaller)
         menuOptions.appendChild(btnAddStudent)
+        div.appendChild(dialogDelete);
+        div.appendChild(dialogEdit);
+        div.appendChild(dialogAdd);
         div.appendChild(h3);
+        div.appendChild(hr);
         div.appendChild(menuOptions);
 
-        
-        
-        
+
+
+
         let actual = divActual;
         this._taller.insertBefore(div, actual);
+    }
+
+    generateId(){
+        this._id = JSON.parse(localStorage.getItem('id'));
+        this._id++;
+        localStorage.setItem('id',this._id);
+        return this._id;
     }
 }
 
