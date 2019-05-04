@@ -166,7 +166,7 @@ export default class Tarjeta {
                     text: 'Taller Agregado con éxito!',
                     type: 'success',
                     confirmButtonText: 'OK'
-                  })
+                })
             };
             form.classList.add('was-validated');
         });
@@ -210,41 +210,39 @@ export default class Tarjeta {
     }
 
     createTarget(divActual,name) {
-        let menu = document.createElement('i');
-        menu.className = 'fas fa-ellipsis-v';
-        menu.style.position = 'absolute';
-        menu.style.marginTop = '10px';
-        menu.style.marginLeft ='390px';
-        menu.style.fontSize = '2em';
-        menu.style.color = 'black';
+        let menuOptions = document.createElement('div');
+        menuOptions.className ='opcionesDeTarjeta';
         let div = document.createElement('div');
         div.style.height = '270px';
         div.style.transition = 'all .2s';
         div.className = 'estilosPost';
-        div.style.background = this.colorRandom();
+        div.style.background = '#355C7D';
 
         
-        var h2 = document.createElement('h2');
-        h2.textContent = name;
-        
-        let div2 = document.createElement('div');
-        div2.className = 'nombreTaller';
+        var h3 = document.createElement('h3');
+        h3.textContent = name;
+        h3.className = 'encabezadoDeTarjeta'
 
 
-        let btnEdit = document.createElement('i');
-        btnEdit.className = 'far fa-edit edit';
-        btnEdit.style.fontSize = '25px';
+        let btnEditTaller = document.createElement('i');
+        btnEditTaller.className = 'far fa-edit edit';
+        btnEditTaller.style.fontSize = '25px';
+
+        let btnDeleteTaller = document.createElement('i');
+        btnDeleteTaller.className = 'fas fa-trash-alt del';
+        btnDeleteTaller.style.fontSize = '25px';
 
         let btnAddStudent = document.createElement('i');
         btnAddStudent.className = 'fas fa-user-plus add';
         btnAddStudent.style.fontSize = '25px';
 
+        menuOptions.appendChild(btnEditTaller);
+        menuOptions.appendChild(btnDeleteTaller)
+        menuOptions.appendChild(btnAddStudent)
+        div.appendChild(h3);
+        div.appendChild(menuOptions);
 
-        div2.appendChild(h2);
-        div2.appendChild(btnAddStudent);
-        div2.appendChild(btnEdit);
-        div.appendChild(menu);
-        div.appendChild(div2);
+        
         
         
         let actual = divActual;
