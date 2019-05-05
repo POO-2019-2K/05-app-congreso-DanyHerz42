@@ -6,8 +6,23 @@ export default class Tarjeta {
         this._taller = taller;
         this._id = 0;
         this._idCard = 0;
-        this.crearFormularioRegistroDeTaller();
+        this.initCards();
+        this._talleres = [];
         // console.log(this.colorRandom())
+    }
+
+    initCards(){
+        
+        if(localStorage.getItem('talleres') === null){
+            return;
+        }else{
+            this._talleres = JSON.parse(localStorage.getItem('talleres'));
+            console.log(this._talleres);
+            this._talleres.forEach((e, index) => {
+                this.createTarget(this._actual,e.color,e.id,e.name);
+            });
+        }
+        
     }
 
     crearFormularioRegistroDeTaller() {
@@ -169,12 +184,9 @@ export default class Tarjeta {
                 let places = inpt4.value;
 
                 let addTaller = new Taller(color,this._idCard,name,dateStar,dateEnd,hour,places)
-
-                this.createTarget(this._actual,color, name, this._idCard);
+                
+                this.createTarget(this._actual,color,this._idCard, name);
                 this._body.removeChild(divBlack);
-                console.log(form);
-
-
 
                 Swal.fire({
                     title: 'Listo!',
@@ -205,13 +217,6 @@ export default class Tarjeta {
         columnRight.appendChild(btnCancel);
         form.appendChild(columnLeft);
         form.appendChild(columnRight);
-        // form.appendChild(formGroup1);
-        // form.appendChild(formGroup2);
-        // form.appendChild(formGroup3);
-        // form.appendChild(formGroup4);
-        // form.appendChild(formGroup5);
-        // form.appendChild(btnSave);
-        // form.appendChild(btnCancel);
 
         let divBlack = document.createElement('div');
         divBlack.className = 'divBlack';
@@ -260,7 +265,7 @@ export default class Tarjeta {
         return color;
     }
 
-    createTarget(divActual,color, name, id) {
+    createTarget(divActual,color,id, name,) {
         
         let menuOptions = document.createElement('div');
         menuOptions.className = 'opcionesDeTarjeta';
@@ -269,7 +274,7 @@ export default class Tarjeta {
         div.style.transition = 'all .2s';
         div.className = 'estilosPost';
         div.style.background = '#355C7D';
-        div.id = (id);
+        div.id = id;
 
 
         var h3 = document.createElement('h3');
@@ -287,6 +292,7 @@ export default class Tarjeta {
         let btnEditTaller = document.createElement('i');
         btnEditTaller.className = 'far fa-edit edit';
         btnEditTaller.style.fontSize = '25px';
+        btnEditTaller.id = id;
         btnEditTaller.addEventListener('mouseover',() => {
             dialogEdit.style.visibility = 'visible';
             dialogDelete.style.visibility = 'hidden';
@@ -302,12 +308,30 @@ export default class Tarjeta {
         let btnDeleteTaller = document.createElement('i');
         btnDeleteTaller.className = 'fas fa-trash-alt del';
         btnDeleteTaller.style.fontSize = '25px';
+        btnDeleteTaller.id = id;
         btnDeleteTaller.addEventListener('mouseover',() => {
             dialogDelete.style.visibility = 'visible';
             dialogEdit.style.visibility = 'hidden';
             dialogAdd.style.visibility = 'hidden';
             window.setTimeout( () => {dialogDelete.style.visibility = 'hidden'},2000);
         });
+        // btnDeleteTaller.addEventListener('click',() => {
+        //     this._talleres = JSON.parse(localStorage.getItem('taleres'));
+        //     let tModification = id;
+            
+        //     this._talleres.forEach((e,index) =>{
+        //         if(e.id === tModification){
+        //             console.log(this._talleres)
+        //             this._talleres.splice(e,1);
+        //             console.log(e)
+        //             localStorage.setItem('taleres',JSON.stringify(this._talleres));
+        //             console.log(this._talleres)
+        //         } 
+        //         localStorage.setItem('taleres', this._talleres);
+        //         this.initCards();  
+        //     });
+            
+        // });
         
         let dialogAdd = document.createElement('p');
         dialogAdd.className = 'dialogAdd rounded-pill';
@@ -316,6 +340,8 @@ export default class Tarjeta {
         let btnAddStudent = document.createElement('i');
         btnAddStudent.className = 'fas fa-user-plus add';
         btnAddStudent.style.fontSize = '25px';
+        btnAddStudent.id = id;
+        btnAddStudent.style.cursor = 'pointer';
         btnAddStudent.addEventListener('mouseover',() => {
             dialogAdd.style.visibility = 'visible';
             dialogDelete.style.visibility = 'hidden';
@@ -332,12 +358,8 @@ export default class Tarjeta {
         div.appendChild(h3);
         div.appendChild(hr);
         div.appendChild(menuOptions);
-
-
-
-
-        let actual = divActual;
-        this._taller.insertBefore(div, actual);
+        
+        this._taller.appendChild(div);
     }
 
     generateId(){

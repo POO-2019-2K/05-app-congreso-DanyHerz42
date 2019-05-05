@@ -1,3 +1,4 @@
+import Tarjeta from "./tarjeta.js";
 export default class Taller{
     constructor(color,id,name,dateStart,dateEnd,hour,places){
         this._color = color;
@@ -11,8 +12,9 @@ export default class Taller{
         this.saveOnLocalStorage();
     }
 
-    saveOnLocalStorage(){
 
+    saveOnLocalStorage(){
+        
         let taller = {
             color: this._color,
             id: this._id,
@@ -22,7 +24,10 @@ export default class Taller{
             hours: this._hour,
             places: this._places
         }
+
+        this._vectorTalleres = JSON.parse(localStorage.getItem('talleres'));
         this._vectorTalleres.push(taller);
-        console.log(this._vectorTalleres);
+        localStorage.setItem('talleres',JSON.stringify(this._vectorTalleres));
+        console.log(JSON.parse(localStorage.getItem('talleres')));
     }
 }

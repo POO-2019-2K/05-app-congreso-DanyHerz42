@@ -40,6 +40,7 @@
     color: #fff;
     transition: all .2s;
     position: absolute;
+    cursor: pointer;
 }
 
 .add{
@@ -48,6 +49,7 @@
     color: #fff;
     transition: all .2s;
     position: absolute;
+    cursor: pointer;
 }
 
 .del{
@@ -56,12 +58,13 @@
     color: #fff;
     transition: all .2s;
     position: absolute;
+    cursor: pointer;
 }
 
 .edit:hover,.add:hover, .del:hover{
     color:  rgb(255, 154, 4);
     text-shadow: 0 0 5px rgba(255, 175, 1, 0.514);
-    cursor: pointer;
+    
 }
 
 .hr{
@@ -69,6 +72,14 @@
     display: block;
     width: 418px;
     margin-top: 150px;
+    z-index: 0;
+}
+
+hr{
+    border: 1px solid #ffffff;
+    position: absolute;
+    margin-top: 100px;
+    width: 99%;
 }
 
 .dialogDelete{
@@ -79,6 +90,7 @@
     margin-top: 180px;
     margin-left: 200px;
     box-shadow: 0 0 15px rgba(12, 12, 12, 0.842);
+    z-index: 1;
 }
 
 .dialogEdit{
@@ -89,6 +101,7 @@
     margin-top: 180px;
     margin-left: 310px;
     box-shadow: 0 0 15px rgba(12, 12, 12, 0.842);
+    z-index: 1;
 }
 
 .dialogAdd{
@@ -99,34 +112,38 @@
     margin-top: 180px;
     margin-left: 270px;
     box-shadow: 0 0 15px rgba(12, 12, 12, 0.842);
+    z-index: 1;
 }
 
 /* estilos inicales */
 
 #btn{
-    width: 424px;
-    height: 270px;
-    margin: 10px;
+    width: 100%;
+    height: 100px;
+    
+    margin-top: 70px;
     cursor: pointer;
-    font-size: 2em;
+    font-size: 20px;
     text-align: center;
-    padding-top: 80px;
+    padding: 10px;
+    padding-top: 35px;
     color: rgb(255, 255, 255);
     transition: all .32s;
-    font-weight: bold;
-    background-color: #2C5364;
-    border-radius: 10px;
+    background-color: #0F2027;
+    border: 1px solid rgba(0, 0, 0, 0);
 }
 
 #btn:hover{
-    box-shadow: 0 0 10px rgba(44, 44, 44, 0.87),
-                -1px -1px 0px 10px inset #0F2027;
+    color: rgb(255, 154, 4);
+    box-shadow: inset 14px 4px 0px -5px  rgb(255, 154, 4),
+                    -16px 2px 28px -7px rgba(0,0,0,0.52);
+    border: 1px solid rgba(0, 0, 0, 0.589);
 }
 
 #btn:hover > .pull{
     transition: all .35s;
     transition-timing-function: ease-in-out;
-    transform: rotateZ(180deg) rotatex(180deg);
+    transform: rotateZ(180deg);
 }
 
 .taller{
@@ -190,10 +207,6 @@
     z-index: 1;
 }
 
-
-
-
-
 .footer{
     border: 1px solid black;
     border-left: none;
@@ -203,7 +216,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 410px;
+    margin-top: 238px;
     padding: 20px;
     padding-left: 30px;
     padding-right: 30px;
@@ -305,4 +318,7 @@
     color: rgb(255, 154, 4);
     cursor: pointer;
     text-shadow: 0 0 2px rgba(255, 175, 1, 0.514);
+}
+.opcionesDeTarjeta{
+    margin-top: 175px;
 }
