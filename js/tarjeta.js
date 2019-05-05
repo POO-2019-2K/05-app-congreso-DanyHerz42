@@ -315,23 +315,35 @@ export default class Tarjeta {
             dialogAdd.style.visibility = 'hidden';
             window.setTimeout( () => {dialogDelete.style.visibility = 'hidden'},2000);
         });
-        // btnDeleteTaller.addEventListener('click',() => {
-        //     this._talleres = JSON.parse(localStorage.getItem('taleres'));
-        //     let tModification = id;
-            
-        //     this._talleres.forEach((e,index) =>{
-        //         if(e.id === tModification){
-        //             console.log(this._talleres)
-        //             this._talleres.splice(e,1);
-        //             console.log(e)
-        //             localStorage.setItem('taleres',JSON.stringify(this._talleres));
-        //             console.log(this._talleres)
-        //         } 
-        //         localStorage.setItem('taleres', this._talleres);
-        //         this.initCards();  
-        //     });
-            
-        // });
+        btnDeleteTaller.addEventListener('click',() => {
+            this._talleres = JSON.parse(localStorage.getItem('talleres'));
+            let tModification = id;
+            this._talleres.forEach((e,index) =>{
+                if(e.id === tModification){
+                    Swal.fire({
+                        title: 'Are you sure to delete this workshop?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                      }).then((result) => {
+                        if (result.value) {
+                          this._taller.removeChild(document.getElementById(e.id));
+                          this._talleres.splice(this._talleres.indexOf(e),1);
+                          console.log(this._talleres);
+                          localStorage.setItem('talleres', JSON.stringify(this._talleres));
+                          Swal.fire(
+                            'Deleted!',
+                            'This workshop has been deleted.',
+                            'success'
+                          )
+                        }
+                      });
+                } 
+            });
+        });
         
         let dialogAdd = document.createElement('p');
         dialogAdd.className = 'dialogAdd rounded-pill';
