@@ -52,6 +52,15 @@
     cursor: pointer;
 }
 
+.view{
+    margin-left: 205px;
+    margin-top: 5px;
+    color: #fff;
+    transition: all .2s;
+    position: absolute;
+    cursor: pointer;
+}
+
 .del{
     margin-left: 260px;
     margin-top: 5px;
@@ -61,7 +70,7 @@
     cursor: pointer;
 }
 
-.edit:hover,.add:hover, .del:hover{
+.edit:hover,.add:hover, .del:hover,.view:hover{
     color:  rgb(255, 154, 4);
     text-shadow: 0 0 5px rgba(255, 175, 1, 0.514);
     
@@ -71,7 +80,7 @@
     border: 2px solid red;
     display: block;
     width: 418px;
-    margin-top: 150px;
+    margin-top: 10px;
     z-index: 0;
 }
 
@@ -111,6 +120,17 @@ hr{
     padding: 2px 4px 2px 4px;
     margin-top: 180px;
     margin-left: 270px;
+    box-shadow: 0 0 15px rgba(12, 12, 12, 0.842);
+    z-index: 1;
+}
+
+.dialogView{
+    position: absolute;
+    background-color: white;
+    font-size: 15px;
+    padding: 2px 4px 2px 4px;
+    margin-top: 180px;
+    margin-left: 160px;
     box-shadow: 0 0 15px rgba(12, 12, 12, 0.842);
     z-index: 1;
 }
@@ -185,7 +205,7 @@ hr{
 }
 
 .encabezado{
-    margin-top: 8px;
+    margin-top: 10px;
     letter-spacing: 2px;
     text-align: center;
     color: #fff;
@@ -199,12 +219,13 @@ hr{
     left: 300px;
     width: 100%;
     padding: 10px;
-    padding-top: 20px;
+    padding-top: 10px;
     background-color: rgb(243, 243, 243);
     border-left: none;
     border-right: none;
     padding-left: 20px;
     z-index: 1;
+   
 }
 
 .footer{
@@ -320,5 +341,64 @@ hr{
     text-shadow: 0 0 2px rgba(255, 175, 1, 0.514);
 }
 .opcionesDeTarjeta{
-    margin-top: 175px;
+    margin-top: -40px;
+}
+.vistTables{
+    margin-left: 650px;
+    color: #355C7D;
+    border: 3px solid #355C7D;
+    padding: 4px 10px 1px 10px;
+    margin-top: 0px;
+}
+
+.divDate{
+
+    width: 140px;
+    display: flex;
+    padding: 5px 15px 5px 15px;
+    font-size: 20px;
+    justify-content: space-between;
+    color: white;
+    margin-top: 28px;
+    margin-left: 10px;
+}
+
+.divDay1{
+    width: 45px;
+    text-align: center;
+}
+.divDay2{
+    width: 45px;
+    text-align: center;
+}
+
+.formEdit{
+    width: 400px;
+    height: 468px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background:white;
+    opacity: 1;
+    background-color: #0F2027;
+    border-radius: 7px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.911);
+}
+
+.closeAl{
+    position: absolute;
+    top: 1.5%;
+    left: 93.4%;
+    color: white;
+    opacity: 1;
+    cursor: pointer;
+    transition: all .1s;
+    font-size: 1.7em;
+}
+
+.closeAl:hover{
+    color: rgb(255, 154, 4);
+    cursor: pointer;
+    text-shadow: 0 0 2px rgba(255, 175, 1, 0.514);
 }

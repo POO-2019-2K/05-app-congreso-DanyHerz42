@@ -9,7 +9,7 @@ class Main{
         let taller = document.querySelector("#taller");
         let tarjeta = new Tarjeta(actual,body,taller);
         // localStorage.removeItem('id');
-        // localStorage.removeItem('taleres');
+        localStorage.removeItem('taleres');
         // console.log(JSON.parse(localStorage.getItem('id')));
         document.querySelector("#btn").addEventListener('click', () => {
             tarjeta.crearFormularioRegistroDeTaller();
