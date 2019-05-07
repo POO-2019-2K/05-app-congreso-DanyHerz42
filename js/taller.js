@@ -28,11 +28,20 @@ export default class Taller {
 
         // console.log(this.getDateOfString(this._dateStart));
         
+        if(localStorage.getItem('talleres') === null){
+            this._vectorTalleres.push(taller);
+        }else{
+            this._vectorTalleres = JSON.parse(localStorage.getItem('talleres'));
+            this._vectorTalleres.push(taller);
+        }
         
-        this._vectorTalleres = JSON.parse(localStorage.getItem('talleres'));
-        this._vectorTalleres.push(taller);
         localStorage.setItem('talleres', JSON.stringify(this._vectorTalleres));
         console.log(JSON.parse(localStorage.getItem('talleres')));
+        
+        // this._vectorTalleres = JSON.parse(localStorage.getItem('talleres'));
+        // this._vectorTalleres.push(taller);
+        // localStorage.setItem('talleres', JSON.stringify(this._vectorTalleres));
+        // console.log(JSON.parse(localStorage.getItem('talleres')));
     }
 
 

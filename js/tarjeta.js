@@ -8,7 +8,9 @@ export default class Tarjeta {
         this._idCard = 0;
         this.initCards();
         this._talleres = [];
-        this._participants = [];
+        this._participant = new Array();
+        
+
         // console.log(this.colorRandom())
     }
 
@@ -691,7 +693,7 @@ export default class Tarjeta {
         return number;
     }
 
-    formularioDeParticipante() {
+    formularioDeParticipante(id) {
         let form = document.createElement('form');
         form.className = 'needs-validation formEdit';
         form.noValidate = true;
@@ -789,9 +791,36 @@ export default class Tarjeta {
         btnSave.addEventListener('click', () => {
 
             if (form.checkValidity() === true) {
-                this._participants = (localStorage.getItem('participants'));
+                let iName = inpt0.value;
+                let iBirthday = inpt1.value;
+                let iEmail = inpt2.value;
+                let iId = id;
+                let participant = {
+                    name: iName,
+                    bithdate: iBirthday,
+                    email: iEmail,
+                    idTaller: iId
+                }
 
-                // Me quede aquiiiiii
+                
+                if(localStorage.getItem('people') === null){
+                    this._participant.push(participant);
+                }else{
+                    this._participant = JSON.parse(localStorage.getItem('people'));
+                    this._participant.push(participant);
+                }
+                
+                localStorage.setItem('people', JSON.stringify(this._participant));
+                console.log(JSON.parse(localStorage.getItem('people')));
+                this._body.removeChild(divBlack);
+                Swal.fire({
+                    title: 'Ready!',
+                    text: 'Participant successfully added to this workshop!',
+                    type: 'success',
+                    confirmButtonText: 'OK'
+                })
+
+                
             };
             form.classList.add('was-validated');
         });
