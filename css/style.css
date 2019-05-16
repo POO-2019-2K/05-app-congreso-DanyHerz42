@@ -35,7 +35,7 @@
 }
 
 .edit{
-    margin-left: 370px;
+    margin: 14px;
     margin-top: 5px;
     color: #fff;
     transition: all .2s;
@@ -44,7 +44,7 @@
 }
 
 .add{
-    margin-left: 315px;
+    margin: 14px;
     margin-top: 5px;
     color: #fff;
     transition: all .2s;
@@ -53,7 +53,7 @@
 }
 
 .view{
-    margin-left: 205px;
+    margin: 14px;
     margin-top: 5px;
     color: #fff;
     transition: all .2s;
@@ -62,7 +62,7 @@
 }
 
 .del{
-    margin-left: 260px;
+    margin: 14px;
     margin-top: 5px;
     color: #fff;
     transition: all .2s;
@@ -89,50 +89,6 @@ hr{
     position: absolute;
     margin-top: 100px;
     width: 99%;
-}
-
-.dialogDelete{
-    position: absolute;
-    background-color: white;
-    font-size: 15px;
-    padding: 2px 4px 2px 4px;
-    margin-top: 180px;
-    margin-left: 200px;
-    box-shadow: 0 0 15px rgba(12, 12, 12, 0.842);
-    z-index: 1;
-}
-
-.dialogEdit{
-    position: absolute;
-    background-color: white;
-    font-size: 15px;
-    padding: 2px 4px 2px 4px;
-    margin-top: 180px;
-    margin-left: 310px;
-    box-shadow: 0 0 15px rgba(12, 12, 12, 0.842);
-    z-index: 1;
-}
-
-.dialogAdd{
-    position: absolute;
-    background-color: white;
-    font-size: 15px;
-    padding: 2px 4px 2px 4px;
-    margin-top: 180px;
-    margin-left: 270px;
-    box-shadow: 0 0 15px rgba(12, 12, 12, 0.842);
-    z-index: 1;
-}
-
-.dialogView{
-    position: absolute;
-    background-color: white;
-    font-size: 15px;
-    padding: 2px 4px 2px 4px;
-    margin-top: 180px;
-    margin-left: 160px;
-    box-shadow: 0 0 15px rgba(12, 12, 12, 0.842);
-    z-index: 1;
 }
 
 /* estilos inicales */
@@ -183,8 +139,6 @@ hr{
     z-index: 3;
     
 }
-
-
 
 .mini-menu{
     position: absolute;
@@ -295,7 +249,31 @@ hr{
     opacity: 1;
     background-color: #0F2027;
     border-radius: 7px;
+    
 }
+
+.formCreate2{
+    width: 900px;
+    height: 580px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background:white;
+    opacity: 1;
+    background-color: #0F2027;
+    border-radius: 7px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.911);
+    padding: 30px;
+}
+
+.divTable{
+    width: 100%;
+    height: 90%;
+    padding: 20px;
+    overflow-y: scroll;
+}
+
 .columnLeft{
     width: 400px;
     height: 100%;
@@ -341,7 +319,10 @@ hr{
     text-shadow: 0 0 2px rgba(255, 175, 1, 0.514);
 }
 .opcionesDeTarjeta{
+    width: 300px;
     margin-top: -40px;
+    margin-left: 190px;
+    display: flex;
 }
 .vistTables{
     margin-left: 650px;

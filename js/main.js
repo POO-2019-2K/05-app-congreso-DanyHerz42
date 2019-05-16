@@ -1,14 +1,12 @@
 import Tarjeta from "./tarjeta.js";
-import Taller from "./taller.js";
 class Main{
     constructor(){
-        // let body1 = document.getElementById('2').id;
-        // console.log(body1);
         let body = document.querySelector('#body');
         let actual = document.querySelector("#btn");
         let taller = document.querySelector("#taller");
         let tarjeta = new Tarjeta(actual,body,taller);
-        // console.log(JSON.parse(localStorage.getItem('id')));
+        // localStorage.clear()
+        console.log(JSON.parse(localStorage.getItem('people')));
         document.querySelector("#btn").addEventListener('click', () => {
             tarjeta.crearFormularioRegistroDeTaller();
         });

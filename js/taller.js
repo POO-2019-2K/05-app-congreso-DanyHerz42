@@ -37,11 +37,6 @@ export default class Taller {
         
         localStorage.setItem('talleres', JSON.stringify(this._vectorTalleres));
         console.log(JSON.parse(localStorage.getItem('talleres')));
-        
-        // this._vectorTalleres = JSON.parse(localStorage.getItem('talleres'));
-        // this._vectorTalleres.push(taller);
-        // localStorage.setItem('talleres', JSON.stringify(this._vectorTalleres));
-        // console.log(JSON.parse(localStorage.getItem('talleres')));
     }
 
 

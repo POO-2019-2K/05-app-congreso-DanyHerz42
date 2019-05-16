@@ -9,26 +9,32 @@ export default class Tarjeta {
         this.initCards();
         this._talleres = [];
         this._participant = new Array();
-        
-
-        // console.log(this.colorRandom())
     }
 
     initCards() {
-
         if (localStorage.getItem('talleres') === null) {
             return;
         } else {
+
             this._talleres = JSON.parse(localStorage.getItem('talleres'));
             this._talleres.forEach((e, index) => {
                 this.createTarget(this._actual, e.color, e.id, e.name, e.dateStart, e.dateEnd, e.hours, e.places);
             });
         }
+    }
 
+    findParticipantes(id) {
+        let i = 0;
+        this._participant = JSON.parse(localStorage.getItem('people'))
+        this._participant.forEach((e, index) => {
+            if (e.id === id) {
+                i++;
+            }
+        });
+        return i;
     }
 
     crearFormularioRegistroDeTaller() {
-
         let form = document.createElement('form');
         form.className = 'needs-validation formCreate';
         form.noValidate = true;
@@ -42,7 +48,6 @@ export default class Tarjeta {
         closeWindow.addEventListener('click', () => {
             this._body.removeChild(divBlack);
         })
-
 
         // Primer FormGroup
         let formGroup1 = document.createElement('div');
@@ -67,8 +72,6 @@ export default class Tarjeta {
         formGroup1.appendChild(inpt0);
         formGroup1.appendChild(divVal1);
         formGroup1.appendChild(divVal2);
-
-
         // -------------------------------------------------------------------------------
         // Segundo FormGroup
         let formGroup2 = document.createElement('div');
@@ -92,8 +95,6 @@ export default class Tarjeta {
         formGroup2.appendChild(inpt1);
         formGroup2.appendChild(divVal12);
         formGroup2.appendChild(divVal22);
-
-
         // -------------------------------------------------------------------------------
         // Tercer FormGroup
         let formGroup3 = document.createElement('div');
@@ -117,8 +118,6 @@ export default class Tarjeta {
         formGroup3.appendChild(inpt2);
         formGroup3.appendChild(divVal13);
         formGroup3.appendChild(divVal23);
-
-
         // -------------------------------------------------------------------------------
         // Cuarto FormGroup
         let formGroup4 = document.createElement('div');
@@ -142,7 +141,6 @@ export default class Tarjeta {
         formGroup4.appendChild(inpt3);
         formGroup4.appendChild(divVal14);
         formGroup4.appendChild(divVal24);
-
         // -------------------------------------------------------------------------------
         // Quinto FormGroup
         let formGroup5 = document.createElement('div');
@@ -270,7 +268,6 @@ export default class Tarjeta {
     }
 
     createTarget(divActual, color, id, name, oDateStart, oDateEnd, hour, places) {
-
         let menuOptions = document.createElement('div');
         menuOptions.className = 'opcionesDeTarjeta';
         let div = document.createElement('div');
@@ -279,7 +276,6 @@ export default class Tarjeta {
         div.className = 'estilosPost';
         div.style.background = '#355C7D';
         div.id = id;
-
 
         var h3 = document.createElement('h3');
         h3.textContent = name;
@@ -327,41 +323,25 @@ export default class Tarjeta {
         hr.className = 'hr';
         hr.style.border = '2px solid' + color + '';
 
-        let dialogEdit = document.createElement('p');
-        dialogEdit.className = 'dialogEdit rounded-pill';
-        dialogEdit.textContent = 'Edit this workshop';
-        dialogEdit.style.visibility = 'hidden';
+        let messEditWor = document.createElement('span');
+        messEditWor.className = 'hint--top hint--success edit';
+        messEditWor.setAttribute('aria-label', 'Edit this workshop');
         let btnEditTaller = document.createElement('i');
-        btnEditTaller.className = 'far fa-edit edit';
+        btnEditTaller.className = 'far fa-edit';
         btnEditTaller.style.fontSize = '25px';
         btnEditTaller.id = id;
-        btnEditTaller.addEventListener('mouseover', () => {
-            dialogEdit.style.visibility = 'visible';
-            dialogDelete.style.visibility = 'hidden';
-            dialogAdd.style.visibility = 'hidden';
-            dialogView.style.visibility = 'hidden';
-            window.setTimeout(() => { dialogEdit.style.visibility = 'hidden' }, 2000);
-        });
         btnEditTaller.addEventListener('click', () => {
             let modificacion = id;
             this.crearFormularioDeEdicion(modificacion);
         });
 
-        let dialogDelete = document.createElement('p');
-        dialogDelete.className = 'dialogDelete rounded-pill';
-        dialogDelete.textContent = 'Delete this workshop';
-        dialogDelete.style.visibility = 'hidden';
+        let messDelWor = document.createElement('span');
+        messDelWor.className = 'hint--top hint--success del';
+        messDelWor.setAttribute('aria-label', 'Delete this workshop');
         let btnDeleteTaller = document.createElement('i');
-        btnDeleteTaller.className = 'fas fa-trash-alt del';
+        btnDeleteTaller.className = 'fas fa-trash-alt ';
         btnDeleteTaller.style.fontSize = '25px';
         btnDeleteTaller.id = id;
-        btnDeleteTaller.addEventListener('mouseover', () => {
-            dialogDelete.style.visibility = 'visible';
-            dialogEdit.style.visibility = 'hidden';
-            dialogAdd.style.visibility = 'hidden';
-            dialogView.style.visibility = 'hidden';
-            window.setTimeout(() => { dialogDelete.style.visibility = 'hidden' }, 2000);
-        });
         btnDeleteTaller.addEventListener('click', () => {
             this._talleres = JSON.parse(localStorage.getItem('talleres'));
             let tModification = id;
@@ -377,66 +357,68 @@ export default class Tarjeta {
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
                         if (result.value) {
-                            this._taller.removeChild(document.getElementById(e.id));
-                            this._talleres.splice(this._talleres.indexOf(e), 1);
-                            console.log(this._talleres);
-                            localStorage.setItem('talleres', JSON.stringify(this._talleres));
-                            Swal.fire(
-                                'Deleted!',
-                                'This workshop has been deleted.',
-                                'success'
-                            )
+                            let contador = 0;
+                            this._participant = JSON.parse(localStorage.getItem('people'));
+                            this._participant.forEach((u,indice) => {
+                                if(e.id === u.idTaller){
+                                    contador++;
+                                }
+                            })
+                            if(contador !== 0){
+                                Swal.fire(
+                                    'Atention!',
+                                    'This workshop still has registered participants.',
+                                    'warning'
+                                )
+                            }else{
+                                this._taller.removeChild(document.getElementById(e.id));
+                                this._talleres.splice(this._talleres.indexOf(e), 1);
+                                console.log(this._talleres);
+                                localStorage.setItem('talleres', JSON.stringify(this._talleres));
+                                Swal.fire(
+                                    'Deleted!',
+                                    'This workshop has been deleted!',
+                                    'success'
+                                )
+                            }
                         }
                     });
                 }
             });
         });
 
-        let dialogAdd = document.createElement('p');
-        dialogAdd.className = 'dialogAdd rounded-pill';
-        dialogAdd.textContent = 'Add participant';
-        dialogAdd.style.visibility = 'hidden';
+        let messAddStu = document.createElement('span');
+        messAddStu.className = 'hint--top-left hint--success add';
+        messAddStu.setAttribute('aria-label', 'Add new participant');
         let btnAddStudent = document.createElement('i');
-        btnAddStudent.className = 'fas fa-user-plus add';
+        btnAddStudent.className = 'fas fa-user-plus';
         btnAddStudent.style.fontSize = '25px';
         btnAddStudent.id = id;
         btnAddStudent.style.cursor = 'pointer';
-        btnAddStudent.addEventListener('mouseover', () => {
-            dialogAdd.style.visibility = 'visible';
-            dialogDelete.style.visibility = 'hidden';
-            dialogEdit.style.visibility = 'hidden';
-            dialogView.style.visibility = 'hidden';
-            window.setTimeout(() => { dialogAdd.style.visibility = 'hidden' }, 2000);
-        });
         btnAddStudent.addEventListener('click', () => {
             this.formularioDeParticipante(id)
         });
 
-        let dialogView = document.createElement('p');
-        dialogView.className = 'dialogView rounded-pill';
-        dialogView.textContent = 'View participants';
-        dialogView.style.visibility = 'hidden';
+        let messViewP = document.createElement('span');
+        messViewP.className = 'hint--top hint--success view';
+        messViewP.setAttribute('aria-label', 'View participants');
         let btnViewParticipants = document.createElement('i');
-        btnViewParticipants.className = 'fas fa-users view';
+        btnViewParticipants.className = 'fas fa-users';
         btnViewParticipants.style.fontSize = '25px';
         btnViewParticipants.id = id;
         btnViewParticipants.style.cursor = 'pointer';
-        btnViewParticipants.addEventListener('mouseover', () => {
-            dialogView.style.visibility = 'visible';
-            dialogDelete.style.visibility = 'hidden';
-            dialogEdit.style.visibility = 'hidden';
-            dialogAdd.style.visibility = 'hidden';
-            window.setTimeout(() => { dialogView.style.visibility = 'hidden' }, 2000);
+        btnViewParticipants.addEventListener('click', () => {
+            this.windowViewParticipants(id);
         });
 
-        menuOptions.appendChild(btnEditTaller);
-        menuOptions.appendChild(btnDeleteTaller)
-        menuOptions.appendChild(btnAddStudent)
-        menuOptions.appendChild(btnViewParticipants)
-        div.appendChild(dialogDelete);
-        div.appendChild(dialogEdit);
-        div.appendChild(dialogAdd);
-        div.appendChild(dialogView);
+        messAddStu.appendChild(btnAddStudent);
+        messViewP.appendChild(btnViewParticipants);
+        messEditWor.appendChild(btnEditTaller);
+        messDelWor.appendChild(btnDeleteTaller);
+        menuOptions.appendChild(messDelWor)
+        menuOptions.appendChild(messEditWor)
+        menuOptions.appendChild(messViewP)
+        menuOptions.appendChild(messAddStu)
         div.appendChild(h3);
         div.appendChild(hr);
         div.appendChild(placesd);
@@ -473,8 +455,6 @@ export default class Tarjeta {
                     this._body.removeChild(divBlack);
                 })
 
-
-                // Primer FormGroup
                 let formGroup1 = document.createElement('div');
                 formGroup1.className = 'form-group';
                 let label0 = document.createElement('label');
@@ -487,7 +467,7 @@ export default class Tarjeta {
                 inpt0.value = e.name;
                 inpt0.id = 'name';
                 inpt0.required = true;
-                // Validaciones 1
+
                 let divVal1 = document.createElement('div');
                 divVal1.textContent = "Correcto";
                 divVal1.className = 'valid-feedback';
@@ -499,9 +479,6 @@ export default class Tarjeta {
                 formGroup1.appendChild(divVal1);
                 formGroup1.appendChild(divVal2);
 
-
-                // -------------------------------------------------------------------------------
-                // Segundo FormGroup
                 let formGroup2 = document.createElement('div');
                 formGroup2.className = 'form-group';
                 let label1 = document.createElement('label');
@@ -524,9 +501,6 @@ export default class Tarjeta {
                 formGroup2.appendChild(divVal12);
                 formGroup2.appendChild(divVal22);
 
-
-                // -------------------------------------------------------------------------------
-                // Tercer FormGroup
                 let formGroup3 = document.createElement('div');
                 formGroup3.className = 'form-group';
                 let label2 = document.createElement('label');
@@ -537,7 +511,7 @@ export default class Tarjeta {
                 inpt2.className = 'form-control inputs';
                 inpt2.id = 'fechaFin';
                 inpt2.required = true;
-                // Validaciones 3
+
                 let divVal13 = document.createElement('div');
                 divVal13.textContent = "Correcto";
                 divVal13.className = 'valid-feedback';
@@ -549,9 +523,6 @@ export default class Tarjeta {
                 formGroup3.appendChild(divVal13);
                 formGroup3.appendChild(divVal23);
 
-
-                // -------------------------------------------------------------------------------
-                // Cuarto FormGroup
                 let formGroup4 = document.createElement('div');
                 formGroup4.className = 'form-group';
                 let label3 = document.createElement('label');
@@ -563,7 +534,7 @@ export default class Tarjeta {
                 inpt3.id = 'horas';
                 inpt3.required = true;
                 inpt3.value = e.hours;
-                // Validaciones 3
+
                 let divVal14 = document.createElement('div');
                 divVal14.textContent = "Correcto";
                 divVal14.className = 'valid-feedback';
@@ -575,8 +546,6 @@ export default class Tarjeta {
                 formGroup4.appendChild(divVal14);
                 formGroup4.appendChild(divVal24);
 
-                // -------------------------------------------------------------------------------
-                // Quinto FormGroup
                 let formGroup5 = document.createElement('div');
                 formGroup5.className = 'form-group';
                 let label4 = document.createElement('label');
@@ -629,7 +598,6 @@ export default class Tarjeta {
                             hours: hour,
                             places: places
                         }
-
                         this._talleres.splice(index, 1, newObj);
                         localStorage.setItem('talleres', JSON.stringify(this._talleres));
                         this._body.removeChild(divBlack);
@@ -672,8 +640,6 @@ export default class Tarjeta {
                 this._body.appendChild(divBlack);
             }
         });
-
-
     }
 
     getDateOfString(date) {
@@ -689,7 +655,6 @@ export default class Tarjeta {
         if (number < 10) {
             return "0" + number
         }
-
         return number;
     }
 
@@ -706,8 +671,6 @@ export default class Tarjeta {
             this._body.removeChild(divBlack);
         })
 
-
-        // Primer FormGroup
         let formGroup1 = document.createElement('div');
         formGroup1.className = 'form-group';
         let label0 = document.createElement('label');
@@ -719,7 +682,7 @@ export default class Tarjeta {
         inpt0.placeholder = 'Type Here';
         inpt0.id = 'name';
         inpt0.required = true;
-        // Validaciones 1
+
         let divVal1 = document.createElement('div');
         divVal1.textContent = "Correcto";
         divVal1.className = 'valid-feedback';
@@ -731,9 +694,6 @@ export default class Tarjeta {
         formGroup1.appendChild(divVal1);
         formGroup1.appendChild(divVal2);
 
-
-        // -------------------------------------------------------------------------------
-        // Segundo FormGroup
         let formGroup2 = document.createElement('div');
         formGroup2.className = 'form-group';
         let label1 = document.createElement('label');
@@ -744,7 +704,7 @@ export default class Tarjeta {
         inpt1.className = 'form-control inputs';
         inpt1.id = 'fechaInicio';
         inpt1.required = true;
-        // Validaciones 2
+
         let divVal12 = document.createElement('div');
         divVal12.textContent = "Correcto";
         divVal12.className = 'valid-feedback';
@@ -756,9 +716,6 @@ export default class Tarjeta {
         formGroup2.appendChild(divVal12);
         formGroup2.appendChild(divVal22);
 
-
-        // -------------------------------------------------------------------------------
-        // Tercer FormGroup
         let formGroup3 = document.createElement('div');
         formGroup3.className = 'form-group';
         let label2 = document.createElement('label');
@@ -769,7 +726,7 @@ export default class Tarjeta {
         inpt2.className = 'form-control inputs';
         inpt2.id = 'fechaFin';
         inpt2.required = true;
-        // Validaciones 3
+
         let divVal13 = document.createElement('div');
         divVal13.textContent = "Correcto";
         divVal13.className = 'valid-feedback';
@@ -781,46 +738,61 @@ export default class Tarjeta {
         formGroup3.appendChild(divVal13);
         formGroup3.appendChild(divVal23);
 
-
-        // creacion de botones
         let btnSave = document.createElement('button');
         btnSave.type = 'button';
         btnSave.className = 'btn btn-success'
-        btnSave.textContent = 'Add workshop';
+        btnSave.textContent = 'Add Participant';
         btnSave.style.marginLeft = '50px';
         btnSave.addEventListener('click', () => {
-
             if (form.checkValidity() === true) {
                 let iName = inpt0.value;
                 let iBirthday = inpt1.value;
                 let iEmail = inpt2.value;
                 let iId = id;
                 let participant = {
+                    idPart: this.generateIdParticipant(),
                     name: iName,
                     bithdate: iBirthday,
                     email: iEmail,
                     idTaller: iId
                 }
+                let bandera = false;
 
-                
-                if(localStorage.getItem('people') === null){
+                if (localStorage.getItem('people') === null) {
                     this._participant.push(participant);
-                }else{
+                    Swal.fire({
+                        title: 'Ready!',
+                        text: 'This person has been deleted from this workshop!',
+                        type: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
                     this._participant = JSON.parse(localStorage.getItem('people'));
-                    this._participant.push(participant);
+                    this._participant.forEach((e, index) => {
+                        if (e.email === participant.email && e.idTaller === participant.idTaller) {
+                            console.log(e.idTaller, e.email)
+                            console.log(participant.idTaller, participant.email)
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'This person is already added to this workshop!',
+                                type: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                            bandera = true;
+                        }
+                    })
+                    if (bandera === false) {
+                        this._participant.push(participant);
+                        Swal.fire({
+                            title: 'Ready!',
+                            text: 'This person has been deleted from this workshop!',
+                            type: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    }
                 }
-                
                 localStorage.setItem('people', JSON.stringify(this._participant));
-                console.log(JSON.parse(localStorage.getItem('people')));
                 this._body.removeChild(divBlack);
-                Swal.fire({
-                    title: 'Ready!',
-                    text: 'Participant successfully added to this workshop!',
-                    type: 'success',
-                    confirmButtonText: 'OK'
-                })
-
-                
             };
             form.classList.add('was-validated');
         });
@@ -846,5 +818,122 @@ export default class Tarjeta {
         divBlack.className = 'divBlack';
         divBlack.appendChild(form);
         this._body.appendChild(divBlack);
+    }
+
+    windowViewParticipants(id) {
+        let form = document.createElement('div');
+        form.className = "formCreate2";
+        let h2 = document.createElement('h2');
+        h2.textContent = "Participants";
+        h2.style.color = "white";
+
+        let divTable = document.createElement('div');
+        divTable.className = "divTable rounded";
+        let div = document.createElement('div');
+        div.style
+        let table = document.createElement('table');
+        table.className = "table table-striped rounded";
+        table.style.margin = "15px";
+        table.style.backgroundColor = "white";
+
+        this._participant = JSON.parse(localStorage.getItem('people'));
+        this._participant.forEach((e, index) => {
+            this.newRowGenerate(id, e, table);
+        });
+
+        let thead = document.createElement('thead');
+        let tr = document.createElement('tr');
+        let th = document.createElement('th');
+        let th2 = document.createElement('th');
+        let th3 = document.createElement('th');
+        let th4 = document.createElement('th');
+        th.textContent = "Name";
+        th2.textContent = "Birthday";
+        th3.textContent = "Email";
+        th4.textContent = "Acciones";
+
+        table.appendChild(thead);
+        thead.appendChild(tr);
+        tr.appendChild(th);
+        tr.appendChild(th2);
+        tr.appendChild(th3);
+        tr.appendChild(th4);
+
+        let closeWindow = document.createElement('i');
+        closeWindow.className = 'fas fa-times close';
+        closeWindow.addEventListener('click', () => {
+            this._body.removeChild(divBlack);
+        })
+
+        form.appendChild(closeWindow);
+        form.appendChild(h2);
+        form.appendChild(divTable);
+        divTable.appendChild(div);
+        div.appendChild(table);
+
+        let divBlack = document.createElement('div');
+        divBlack.className = 'divBlack';
+        divBlack.appendChild(form);
+        this._body.appendChild(divBlack);
+    }
+
+    newRowGenerate(id, e, table) {
+        if (e.idTaller === id) {
+            let row = document.createElement('tr');
+            row.id = e.idPart;
+            let celda1 = document.createElement('td');
+            celda1.textContent = e.name;
+            let celda2 = document.createElement('td');
+            celda2.textContent = e.bithdate;
+            let celda3 = document.createElement('td');
+            celda3.textContent = e.email;
+            let celda4 = document.createElement('td');
+            let buttonDelete = document.createElement("input");
+            buttonDelete.className = "btn btn-danger";
+            buttonDelete.value = 'Eliminar';
+            buttonDelete.type = "button";
+            buttonDelete.addEventListener('click', () => {
+                this._participant = JSON.parse(localStorage.getItem('people'));
+                this._participant.forEach((j, indice) => {
+                    Swal.fire({
+                        title: 'Are you sure to delete this participant?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => { 
+                        if (result.value) {
+                            if ((e.idTaller === j.idTaller) && (e.idPart === j.idPart)) {
+                                this._participant.splice(indice, 1);
+                                localStorage.setItem('people', JSON.stringify(this._participant));
+                                table.removeChild(row);
+                                Swal.fire({
+                                    type: "success",
+                                    title: "Successfully",
+                                    text: "This participant has been eliminated",
+                                    confirmButtonText: "ok"
+                                });
+                            }
+                        }
+                    })
+                })
+            });
+            celda4.appendChild(buttonDelete);
+
+            row.appendChild(celda1);
+            row.appendChild(celda2);
+            row.appendChild(celda3);
+            row.appendChild(celda4);
+            table.appendChild(row);
+        }
+    }
+
+    generateIdParticipant() {
+        this._id = JSON.parse(localStorage.getItem('idPart'));
+        this._id++;
+        localStorage.setItem('idPart', this._id);
+        return this._id;
     }
 }
