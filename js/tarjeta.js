@@ -359,18 +359,18 @@ export default class Tarjeta {
                         if (result.value) {
                             let contador = 0;
                             this._participant = JSON.parse(localStorage.getItem('people'));
-                            this._participant.forEach((u,indice) => {
-                                if(e.id === u.idTaller){
+                            this._participant.forEach((u, indice) => {
+                                if (e.id === u.idTaller) {
                                     contador++;
                                 }
                             })
-                            if(contador !== 0){
+                            if (contador !== 0) {
                                 Swal.fire(
                                     'Atention!',
                                     'This workshop still has registered participants.',
                                     'warning'
                                 )
-                            }else{
+                            } else {
                                 this._taller.removeChild(document.getElementById(e.id));
                                 this._talleres.splice(this._talleres.indexOf(e), 1);
                                 console.log(this._talleres);
@@ -396,7 +396,17 @@ export default class Tarjeta {
         btnAddStudent.id = id;
         btnAddStudent.style.cursor = 'pointer';
         btnAddStudent.addEventListener('click', () => {
-            this.formularioDeParticipante(id)
+            let bandera = this._validarCantidadDeParticpantes(id);
+            if(bandera === true){
+                this.formularioDeParticipante(id)
+            }else if(bandera === false){
+                Swal.fire({
+                    type: "warning",
+                    text: "There are no more places available in this workshop.",
+                    title: "Atention"
+                })
+            }
+            
         });
 
         let messViewP = document.createElement('span');
@@ -408,7 +418,23 @@ export default class Tarjeta {
         btnViewParticipants.id = id;
         btnViewParticipants.style.cursor = 'pointer';
         btnViewParticipants.addEventListener('click', () => {
-            this.windowViewParticipants(id);
+            this._participant = JSON.parse(localStorage.getItem('people'));
+            let contador = 0;
+            this._participant.forEach((e, index) => {
+                if (e.idTaller === id) {
+                    contador++;
+                }
+            })
+            if (contador !== 0) {
+                this.windowViewParticipants(id);
+            } else if (contador === 0) {
+                Swal.fire({
+                    type: "warning",
+                    title: "Atention!",
+                    text: "Has not registered any participant yet."
+                })
+            }
+
         });
 
         messAddStu.appendChild(btnAddStudent);
@@ -489,7 +515,7 @@ export default class Tarjeta {
                 inpt1.className = 'form-control inputs';
                 inpt1.id = 'fechaInicio';
                 inpt1.required = true;
-                // Validaciones 2
+
                 let divVal12 = document.createElement('div');
                 divVal12.textContent = "Correcto";
                 divVal12.className = 'valid-feedback';
@@ -557,7 +583,7 @@ export default class Tarjeta {
                 inpt4.id = 'cupo';
                 inpt4.value = e.places;
                 inpt4.required = true;
-                // Validaciones 5
+
                 let divVal15 = document.createElement('div');
                 divVal15.textContent = "Correcto";
                 divVal15.className = 'valid-feedback';
@@ -569,11 +595,10 @@ export default class Tarjeta {
                 formGroup5.appendChild(divVal15);
                 formGroup5.appendChild(divVal25);
 
-                // creacion de botones
                 let btnSave = document.createElement('button');
                 btnSave.type = 'button';
                 btnSave.className = 'btn btn-success'
-                btnSave.textContent = 'Add workshop';
+                btnSave.textContent = 'Save Changes';
                 btnSave.style.marginLeft = '70px';
                 btnSave.addEventListener('click', () => {
 
@@ -752,7 +777,7 @@ export default class Tarjeta {
                 let participant = {
                     idPart: this.generateIdParticipant(),
                     name: iName,
-                    bithdate: iBirthday,
+                    bithdate: this.getDateOfString(iBirthday),
                     email: iEmail,
                     idTaller: iId
                 }
@@ -760,6 +785,7 @@ export default class Tarjeta {
 
                 if (localStorage.getItem('people') === null) {
                     this._participant.push(participant);
+                    this._decrementarLugaresTaller(participant.idTaller);
                     Swal.fire({
                         title: 'Ready!',
                         text: 'This person has been deleted from this workshop!',
@@ -770,8 +796,6 @@ export default class Tarjeta {
                     this._participant = JSON.parse(localStorage.getItem('people'));
                     this._participant.forEach((e, index) => {
                         if (e.email === participant.email && e.idTaller === participant.idTaller) {
-                            console.log(e.idTaller, e.email)
-                            console.log(participant.idTaller, participant.email)
                             Swal.fire({
                                 title: 'Error!',
                                 text: 'This person is already added to this workshop!',
@@ -783,6 +807,7 @@ export default class Tarjeta {
                     })
                     if (bandera === false) {
                         this._participant.push(participant);
+                        this._decrementarLugaresTaller(participant.idTaller);
                         Swal.fire({
                             title: 'Ready!',
                             text: 'This person has been deleted from this workshop!',
@@ -830,7 +855,9 @@ export default class Tarjeta {
         let divTable = document.createElement('div');
         divTable.className = "divTable rounded";
         let div = document.createElement('div');
-        div.style
+        div.style.height = "100%";
+        div.style.overflowY = "scroll";
+        div.style.overflowX = "hidden";
         let table = document.createElement('table');
         table.className = "table table-striped rounded";
         table.style.margin = "15px";
@@ -895,29 +922,32 @@ export default class Tarjeta {
             buttonDelete.addEventListener('click', () => {
                 this._participant = JSON.parse(localStorage.getItem('people'));
                 this._participant.forEach((j, indice) => {
-                    Swal.fire({
-                        title: 'Are you sure to delete this participant?',
-                        text: "You won't be able to revert this!",
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => { 
-                        if (result.value) {
-                            if ((e.idTaller === j.idTaller) && (e.idPart === j.idPart)) {
+                    if ((e.idTaller === j.idTaller) && (e.idPart === j.idPart)) {
+                        Swal.fire({
+                            title: 'Are you sure to delete this participant?',
+                            text: "You won't be able to revert this!",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.value) {
+                                console.log(j.name);
                                 this._participant.splice(indice, 1);
                                 localStorage.setItem('people', JSON.stringify(this._participant));
                                 table.removeChild(row);
+                                this._incrementarLugaresTaller(e.idTaller);
                                 Swal.fire({
                                     type: "success",
                                     title: "Successfully",
                                     text: "This participant has been eliminated",
                                     confirmButtonText: "ok"
                                 });
+
                             }
-                        }
-                    })
+                        })
+                    }
                 })
             });
             celda4.appendChild(buttonDelete);
@@ -935,5 +965,56 @@ export default class Tarjeta {
         this._id++;
         localStorage.setItem('idPart', this._id);
         return this._id;
+    }
+
+    _decrementarLugaresTaller(idTaller) {
+        this._talleres = JSON.parse(localStorage.getItem('talleres'));
+        this._talleres.forEach((o, ind) => {
+            if (o.id === idTaller) {
+                o.places--;
+            }
+        })
+        localStorage.setItem("talleres", JSON.stringify(this._talleres));
+        this._taller.innerHTML = "";
+        this.initCards();
+    }
+
+    _incrementarLugaresTaller(idTaller) {
+        this._talleres = JSON.parse(localStorage.getItem('talleres'));
+        this._talleres.forEach((o, ind) => {
+            if (o.id === idTaller) {
+                o.places++;
+            }
+        })
+        localStorage.setItem("talleres", JSON.stringify(this._talleres));
+        this._taller.innerHTML = "";
+        this.initCards();
+    }
+
+    _validarCantidadDeParticpantes(idTallerComp){
+        let contador = 0;
+        let condicion = true;
+        let limite = 0;
+        this._talleres = JSON.parse(localStorage.getItem('talleres',));
+        this._participant = JSON.parse(localStorage.getItem('people'));
+        this._talleres.forEach((e,index) => {
+            if(idTallerComp === e.id){
+                limite = e.places;
+                this._participant.forEach((j,indice) =>{
+                    if(j.idTaller === idTallerComp){
+                        contador++;
+                    }
+                })
+            }
+        });
+
+
+        if(limite === 0){
+            condicion = false;
+        }else{
+            condicion = true;
+        }
+
+        return condicion;
     }
 }

@@ -5,6 +5,7 @@ class Main{
         let actual = document.querySelector("#btn");
         let taller = document.querySelector("#taller");
         let tarjeta = new Tarjeta(actual,body,taller);
+        console.log(JSON.parse(localStorage.getItem('talleres')));
         // localStorage.clear()
         console.log(JSON.parse(localStorage.getItem('people')));
         document.querySelector("#btn").addEventListener('click', () => {

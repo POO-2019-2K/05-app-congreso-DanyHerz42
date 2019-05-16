@@ -1,4 +1,3 @@
-import Tarjeta from "./tarjeta.js";
 export default class Taller {
     constructor(color, id, name, dateStart, dateEnd, hour, places) {
         this._color = color;
@@ -12,7 +11,6 @@ export default class Taller {
         this.saveOnLocalStorage();
     }
 
-
     saveOnLocalStorage() {
         let dateStartString = this.getDateOfString(this._dateStart);
         let dateEndString = this.getDateOfString(this._dateEnd);
@@ -25,9 +23,7 @@ export default class Taller {
             hours: this._hour,
             places: this._places
         }
-
-        // console.log(this.getDateOfString(this._dateStart));
-        
+     
         if(localStorage.getItem('talleres') === null){
             this._vectorTalleres.push(taller);
         }else{
@@ -38,7 +34,6 @@ export default class Taller {
         localStorage.setItem('talleres', JSON.stringify(this._vectorTalleres));
         console.log(JSON.parse(localStorage.getItem('talleres')));
     }
-
 
     getDateOfString(date){
         let meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov", "Dic"];
