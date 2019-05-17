@@ -1,4 +1,6 @@
  # Ejercicio 5 El Congreso [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3eae863db7aa4f65a8dfe50072fb4eb8)](https://www.codacy.com/app/DanyHerz42/05-app-congreso-DanyHerz42?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=POO-2019-2K/05-app-congreso-DanyHerz42&amp;utm_campaign=Badge_Grade)
+ 
+ [![codebeat badge](https://codebeat.co/badges/4dcd50e5-a939-491b-b33b-d82b0c3664eb)](https://codebeat.co/projects/github-com-poo-2019-2k-05-app-congreso-danyherz42-master)
 
 ## Tiempo para realizar la actividad
 
